@@ -54,6 +54,19 @@ public class ReplaceBraces implements TranspileStage
 					&& codeArray[i + 3] == 'l'
 					&& codeArray[i + 4] == 'e')
 				bodyIdentifierSuffix = true;
+			//try support
+			else if (c == 't' && i + 2 < max
+					&& codeArray[i + 1] == 'r'
+					&& codeArray[i + 2] == 'y')
+				bodyIdentifierSuffix = true;
+			//catch support
+			else if (c == 'e' && i + 5 < max
+					&& codeArray[i + 1] == 'x'
+					&& codeArray[i + 2] == 'c'
+					&& codeArray[i + 3] == 'e'
+					&& codeArray[i + 4] == 'p'
+					&& codeArray[i + 5] == 't')
+				bodyIdentifierSuffix = true;
 			
 			if (c == '\r' || c == '\n')
 			{
