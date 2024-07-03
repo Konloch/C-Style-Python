@@ -48,7 +48,8 @@ public class RemoveSingleLineComments implements TranspileStage
 					&& codeArray[i + 2] == '/')
 			{
 				commentSlashCount++;
-				transpiledCode.append("#").append(buffer);
+				buffer.append("#");
+				transpiledCode.append(buffer);
 				buffer.setLength(0);
 				i += 2;
 			}
