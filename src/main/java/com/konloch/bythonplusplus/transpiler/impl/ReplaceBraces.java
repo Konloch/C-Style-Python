@@ -32,6 +32,36 @@ public class ReplaceBraces implements TranspileStage
 		{
 			char c = codeArray[i];
 			
+			//function support
+			if (c == 'd' && insideFunction[0] == 0
+					|| c == 'e' && insideFunction[0] == 1
+					|| c == 'f' && insideFunction[0] == 2)
+			{
+				insideFunction[0]++;
+			}
+			//if branch support
+			else if (c == 'i' && insideFunction[1] == 0
+					|| c == 'f' && insideFunction[1] == 1)
+			{
+				insideFunction[1]++;
+			}
+			//for loop support
+			else if (c == 'f' && insideFunction[2] == 0
+					|| c == 'o' && insideFunction[2] == 1
+					|| c == 'r' && insideFunction[2] == 2)
+			{
+				insideFunction[2]++;
+			}
+			//while loop support
+			else if (c == 'w' && insideFunction[3] == 0
+					|| c == 'h' && insideFunction[3] == 1
+					|| c == 'i' && insideFunction[3] == 2
+					|| c == 'l' && insideFunction[3] == 3
+					|| c == 'e' && insideFunction[3] == 4)
+			{
+				insideFunction[3]++;
+			}
+			
 			if (c == '\r' || c == '\n')
 			{
 				//skip \r\n or \n\r
@@ -47,8 +77,10 @@ public class ReplaceBraces implements TranspileStage
 					continue;
 				}
 				
-				if(insideFunction[0] == 3
-					|| insideFunction[1] == 2)
+				if(insideFunction[0] == 3 //def
+					|| insideFunction[1] == 2 //if
+					|| insideFunction[2] == 3 //for
+					|| insideFunction[3] == 5) //while
 				{
 					String temp = buffer.toString().trim();
 					buffer.setLength(0);
@@ -73,25 +105,9 @@ public class ReplaceBraces implements TranspileStage
 				newLineSkip = insertTabDepth(buffer, transpiledCode, instructionScope, newLineSkip);
 				instructionScope--;
 			}
-			//function support
-			else if (c == 'd' && insideFunction[0] == 0
-					|| c == 'e' && insideFunction[0] == 1
-					|| c == 'f' && insideFunction[0] == 2)
-			{
-				buffer.append(c);
-				insideFunction[0]++;
-			}
-			//if support
-			else if (c == 'i' && insideFunction[1] == 0
-					|| c == 'f' && insideFunction[2] == 1)
-			{
-				buffer.append(c);
-				insideFunction[0]++;
-			}
 			else //add character to buffer
 			{
 				buffer.append(c);
-				Arrays.fill(insideFunction, 0);
 			}
 		}
 		
