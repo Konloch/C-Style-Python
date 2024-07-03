@@ -1,4 +1,4 @@
-package com.konloch.bythonplusplus.tests.interpreter;
+package com.konloch.bythonplusplus.tests;
 
 import com.konloch.bythonplusplus.BythonPlusPlus;
 import com.konloch.bythonplusplus.process.ProcessWrapper;
