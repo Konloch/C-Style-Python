@@ -1,6 +1,7 @@
 package com.konloch.bythonplusplus;
 
 import com.konloch.bythonplusplus.transpiler.TranspileStage;
+import com.konloch.bythonplusplus.transpiler.impl.RemoveComments;
 import com.konloch.bythonplusplus.transpiler.impl.ReplaceBraces;
 import com.konloch.disklib.DiskReader;
 import com.konloch.disklib.DiskWriter;
@@ -16,6 +17,7 @@ public class BythonPlusPlus
 	public final BPPConfig config = new BPPConfig();
 	public final TranspileStage[] stages = new TranspileStage[]
 	{
+		new RemoveComments(),
 		new ReplaceBraces(),
 	};
 	
