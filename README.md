@@ -2,11 +2,13 @@
 Acts similiar to [Bython](https://github.com/mathialo/bython).
 
 ## Features
-+ Transpilers for: `Bython to Python`, `Python to Bython`, `Python to Bython++`, `Bython++ to Python`
++ Transpilers for: `Bython to Python`, `Python to Bython++`, `Bython++ to Python`
 + CLI & Java API for compiling or running, running requires python (version is up to the user).
 
 ## What Is Bython++
 + It's similar to Bython, with the major difference being `If statements`, `for loops` & `while loops` are C/Java like.
+    + This means instead of using tabs, brackets define scope.
+    + `//` defines a comment, we also inherit python comments with `#`
 + All syntax changes are optional, the transpiler supports python code by default, so you can keep your favorite python syntax sugars.
 
 ## How To Use
