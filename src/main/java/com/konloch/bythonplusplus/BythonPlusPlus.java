@@ -41,71 +41,69 @@ public class BythonPlusPlus
 		BythonPlusPlus bpp = new BythonPlusPlus();
 		bpp.config.load();
 		ArrayList<String> arguments = new ArrayList<>();
+		int i = 0;
 		
-		for(int i = 0; i < args.length; i++)
+		try
 		{
-			try
+			String arg = args[i].toLowerCase();
+			
+			switch(arg)
 			{
-				String arg = args[i].toLowerCase();
+				case "-c": //compile python into bpp
+					arg = args[i++];
+					
+					if(arg.toLowerCase().endsWith(".py"))
+					{
+						File inputFile = new File(arg);
+						File outputFile = new File(inputFile.getAbsolutePath().substring(0, inputFile.getAbsolutePath().length() - 2) + "bpp");
+						
+						//read from arg, transpile from python to bpp, write to disk
+						DiskWriter.write(outputFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
+					}
+					else
+					{
+						System.out.println("File must end in .py to compile to .bpp");
+						return;
+					}
+					break;
 				
-				switch(arg)
-				{
-					case "-c": //compile python into bpp
-						arg = args[i++];
+				default:
+					for(int x = i + 1; x < args.length; x++)
+					{
+						arguments.add(args[x]);
+						i++;
+					}
+					
+					if(arg.endsWith(".py")) //run python files (convert to bpp, convert back to python, then run)
+					{
+						//temp compile and run
+						File tempFile = File.createTempFile("bpp-transpile", "bpp");
 						
-						if(arg.toLowerCase().endsWith(".py"))
-						{
-							File inputFile = new File(arg);
-							File outputFile = new File(inputFile.getAbsolutePath().substring(0, inputFile.getAbsolutePath().length() - 2) + "bpp");
-							
-							//read from arg, transpile from python to bpp, write to disk
-							DiskWriter.write(outputFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
-						}
-						else
-						{
-							System.out.println("File must end in .py to compile to .bpp");
-							return;
-						}
-						break;
+						//read from arg, transpile from python to bpp, write to disk
+						DiskWriter.write(tempFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
 						
-					default:
-						for(int x = i + 1; x < args.length; x++)
-						{
-							arguments.add(args[x]);
-							i++;
-						}
+						//run bpp file
+						if(!bpp.interpretBPPFile(tempFile, arguments.toArray(new String[0])))
+							System.out.println("Error: File " + arg + " could not be ran.");
 						
-						if(arg.endsWith(".py")) //run python files (convert to bpp, convert back to python, then run)
-						{
-							//temp compile and run
-							File tempFile = File.createTempFile("bpp-transpile", "bpp");
-							
-							//read from arg, transpile from python to bpp, write to disk
-							DiskWriter.write(tempFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
-							
-							//run bpp file
-							if(!bpp.interpretBPPFile(tempFile, arguments.toArray(new String[0])))
-								System.out.println("Error: File " + arg + " could not be ran.");
-							
-							tempFile.delete();
-						}
-						else if(arg.endsWith(".by")) //run bython files
-						{
-							if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
-								System.out.println("Error: File " + arg + " could not be ran.");
-						}
-						else if(arg.endsWith(".bpp")) //run bython++ files
-						{
-							if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
-								System.out.println("Error: File " + arg + " could not be ran.");
-						}
-						break;
-				}
+						tempFile.delete();
+					}
+					else if(arg.endsWith(".by")) //run bython files
+					{
+						if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
+							System.out.println("Error: File " + arg + " could not be ran.");
+					}
+					else if(arg.endsWith(".bpp")) //run bython++ files
+					{
+						if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
+							System.out.println("Error: File " + arg + " could not be ran.");
+					}
+					break;
 			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
