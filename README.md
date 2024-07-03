@@ -14,11 +14,11 @@ Acts similiar to [Bython](https://github.com/mathialo/bython).
 
 ## How To Use
 + Edit the `config.ini` and provide your python paths for the version you want to use.
-+ Run the class 'CStylePython' with the argument pointing to the script you want to run with the .cpy file extension
++ Run the class 'CStylePython' with the argument pointing to the script you want to interpret with the .cpy file extension
 
 ## Requirements
-+ Java 1.8 or greater
-+ Python (any version) if you want to interpret the C-Style Python code.
++ Java 1.8 or greater - for transpiling.
++ Python (any version) - if you want to interpret the C-Style Python code.
 
 ## Notes
 + Super experimental, lacks an AST - so it's prone to breaking, feel free to report any edge-cases you find!
