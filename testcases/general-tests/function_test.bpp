@@ -1,8 +1,8 @@
+test_function(5);
+
 def test_function(x)
 {
     y = x * x;
     z = y + 5;
     print(z);
 }
-
-test_function(5);
