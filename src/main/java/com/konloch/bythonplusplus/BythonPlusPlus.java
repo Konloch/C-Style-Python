@@ -117,13 +117,8 @@ public class BythonPlusPlus
 		//process wrapper
 		ProcessWrapper wrapper = runBythonPlusPlusFile(file, arguments);
 		
-		//output sys out
-		for(String out : wrapper.out)
-			System.out.println(out);
-		
-		//output sys err
-		for(String err : wrapper.err)
-			System.err.println(err);
+		//print debug
+		wrapper.printDebug();
 		
 		return true;
 	}
@@ -151,11 +146,13 @@ public class BythonPlusPlus
 		//temp compile and run
 		File tempFile = File.createTempFile("bpp-transpile", "py");
 		
+		String bppCode = bythonPlusPlusToPython(DiskReader.readString(file));
+		
 		//read from arg, transpile from python to bpp, write to disk
-		DiskWriter.write(tempFile, bythonPlusPlusToPython(DiskReader.readString(file)));
+		DiskWriter.write(tempFile, bppCode);
 		
 		//run tempFile via python
-		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile, arguments);
+		ProcessWrapper wrapper = python.runPythonFile(bppCode, config.getPython(), tempFile, arguments);
 		
 		//delete temp file
 		tempFile.delete();

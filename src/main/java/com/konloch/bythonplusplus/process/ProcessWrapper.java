@@ -13,8 +13,14 @@ import java.util.List;
  */
 public class ProcessWrapper
 {
+	public final String bppCode;
 	public final List<String> out = new ArrayList<>();
 	public final List<String> err = new ArrayList<>();
+	
+	public ProcessWrapper(String bppCode)
+	{
+		this.bppCode = bppCode;
+	}
 	
 	public void copyFromInputStream(List<String> list, InputStream is)
 	{
@@ -28,5 +34,21 @@ public class ProcessWrapper
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void printDebug()
+	{
+		//output sys out
+		for(String out : out)
+			System.out.println(out);
+		
+		//output sys err
+		for(String err : err)
+			System.err.println(err);
+	}
+	
+	public void printScript()
+	{
+		System.out.println("BPP Transpiled Python Script: " + bppCode);
 	}
 }
