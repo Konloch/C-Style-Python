@@ -114,6 +114,8 @@ public class BythonPlusPlus
 		
 		//TODO output err and sys out
 		
+		tempFile.delete();
+		
 		return true;
 	}
 	
