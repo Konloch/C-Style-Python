@@ -3,6 +3,8 @@ package com.konloch.bythonplusplus.transpiler.impl;
 import com.konloch.bythonplusplus.BythonPlusPlus;
 import com.konloch.bythonplusplus.transpiler.TranspileStage;
 
+import java.util.Arrays;
+
 /**
  * @author Konloch
  * @since 7/2/2024
@@ -23,7 +25,7 @@ public class ReplaceBraces implements TranspileStage
 		StringBuilder transpiledCode = new StringBuilder();
 		int instructionScope = 0;
 		int newLineSkip = 0;
-		int insideFunction = 0;
+		int[] insideFunction = new int[5];
 		
 		char[] codeArray = code.toCharArray();
 		for(int i = 0; i < codeArray.length; i++)
@@ -45,7 +47,8 @@ public class ReplaceBraces implements TranspileStage
 					continue;
 				}
 				
-				if(insideFunction == 3)
+				if(insideFunction[0] == 3
+					|| insideFunction[1] == 2)
 				{
 					String temp = buffer.toString().trim();
 					buffer.setLength(0);
@@ -56,7 +59,7 @@ public class ReplaceBraces implements TranspileStage
 				//EOL insert buffer and reset
 				transpiledCode.append(getTabs(instructionScope)).append(buffer.toString().trim()).append(bpp.config.getNewLine());
 				buffer.setLength(0);
-				insideFunction = 0;
+				Arrays.fill(insideFunction, 0);
 			}
 			else if (c == '{')
 			{
@@ -70,17 +73,25 @@ public class ReplaceBraces implements TranspileStage
 				newLineSkip = insertTabDepth(buffer, transpiledCode, instructionScope, newLineSkip);
 				instructionScope--;
 			}
-			else if (c == 'd' && insideFunction == 0
-					|| c == 'e' && insideFunction == 1
-					|| c == 'f' && insideFunction == 2)
+			//function support
+			else if (c == 'd' && insideFunction[0] == 0
+					|| c == 'e' && insideFunction[0] == 1
+					|| c == 'f' && insideFunction[0] == 2)
 			{
 				buffer.append(c);
-				insideFunction++;
+				insideFunction[0]++;
+			}
+			//if support
+			else if (c == 'i' && insideFunction[1] == 0
+					|| c == 'f' && insideFunction[2] == 1)
+			{
+				buffer.append(c);
+				insideFunction[0]++;
 			}
 			else //add character to buffer
 			{
 				buffer.append(c);
-				insideFunction = 0;
+				Arrays.fill(insideFunction, 0);
 			}
 		}
 		
