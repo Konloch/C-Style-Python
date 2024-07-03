@@ -1,4 +1,4 @@
-package com.konloch.bythonplusplus.tests;
+package com.konloch.bythonplusplus.tests.general;
 
 import com.konloch.bythonplusplus.BythonPlusPlus;
 import com.konloch.bythonplusplus.process.ProcessWrapper;
@@ -13,18 +13,19 @@ import static org.junit.Assert.assertEquals;
  * @author Konloch
  * @since 7/3/2024
  */
-public class CommentsTest
+public class FunctionInteropTest
 {
 	@Test
 	public void testTestFunction() throws IOException, InterruptedException
 	{
 		BythonPlusPlus bpp = new BythonPlusPlus();
-		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/edgecase-tests/comments_test.bpp"));
+		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/general-tests/function_interop.bpp"),
+				"27");
 		
 		//assert wrapper output length
 		assertEquals(1, wrapper.out.size());
 		
 		//assert python interpreter results
-		assertEquals("hello///world\"testing escape///part-2", wrapper.out.get(0).trim());
+		assertEquals("734", wrapper.out.get(0).trim());
 	}
 }

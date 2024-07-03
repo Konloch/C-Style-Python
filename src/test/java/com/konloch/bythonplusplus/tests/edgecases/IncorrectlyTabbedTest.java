@@ -1,4 +1,4 @@
-package com.konloch.bythonplusplus.tests;
+package com.konloch.bythonplusplus.tests.edgecases;
 
 import com.konloch.bythonplusplus.BythonPlusPlus;
 import com.konloch.bythonplusplus.process.ProcessWrapper;
