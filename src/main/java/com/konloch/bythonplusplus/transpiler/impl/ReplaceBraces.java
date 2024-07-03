@@ -25,42 +25,35 @@ public class ReplaceBraces implements TranspileStage
 		StringBuilder transpiledCode = new StringBuilder();
 		int instructionScope = 0;
 		int newLineSkip = 0;
-		int[] insideFunction = new int[5];
+		boolean bodyIdentifierSuffix = false;
 		
 		char[] codeArray = code.toCharArray();
-		for(int i = 0; i < codeArray.length; i++)
+		int max = codeArray.length;
+		for(int i = 0; i < max; i++)
 		{
 			char c = codeArray[i];
 			
 			//function support
-			if (c == 'd' && insideFunction[0] == 0
-					|| c == 'e' && insideFunction[0] == 1
-					|| c == 'f' && insideFunction[0] == 2)
-			{
-				insideFunction[0]++;
-			}
+			if (c == 'd' && i + 2 < max
+					&& codeArray[i + 1] == 'e'
+					&& codeArray[i + 2] == 'f')
+				bodyIdentifierSuffix = true;
 			//if branch support
-			else if (c == 'i' && insideFunction[1] == 0
-					|| c == 'f' && insideFunction[1] == 1)
-			{
-				insideFunction[1]++;
-			}
+			else if (c == 'i' && i + 1 < max
+					&& codeArray[i + 1] == 'f')
+				bodyIdentifierSuffix = true;
 			//for loop support
-			else if (c == 'f' && insideFunction[2] == 0
-					|| c == 'o' && insideFunction[2] == 1
-					|| c == 'r' && insideFunction[2] == 2)
-			{
-				insideFunction[2]++;
-			}
+			else if (c == 'f' && i + 2 < max
+					&& codeArray[i + 1] == 'o'
+					&& codeArray[i + 2] == 'r')
+				bodyIdentifierSuffix = true;
 			//while loop support
-			else if (c == 'w' && insideFunction[3] == 0
-					|| c == 'h' && insideFunction[3] == 1
-					|| c == 'i' && insideFunction[3] == 2
-					|| c == 'l' && insideFunction[3] == 3
-					|| c == 'e' && insideFunction[3] == 4)
-			{
-				insideFunction[3]++;
-			}
+			else if (c == 'w' && i + 4 < max
+					&& codeArray[i + 1] == 'h'
+					&& codeArray[i + 2] == 'i'
+					&& codeArray[i + 3] == 'l'
+					&& codeArray[i + 4] == 'e')
+				bodyIdentifierSuffix = true;
 			
 			if (c == '\r' || c == '\n')
 			{
@@ -77,10 +70,7 @@ public class ReplaceBraces implements TranspileStage
 					continue;
 				}
 				
-				if(insideFunction[0] == 3 //def
-					|| insideFunction[1] == 2 //if
-					|| insideFunction[2] == 3 //for
-					|| insideFunction[3] == 5) //while
+				if(bodyIdentifierSuffix) //while
 				{
 					String temp = buffer.toString().trim();
 					buffer.setLength(0);
@@ -91,7 +81,7 @@ public class ReplaceBraces implements TranspileStage
 				//EOL insert buffer and reset
 				transpiledCode.append(getTabs(instructionScope)).append(buffer.toString().trim()).append(bpp.config.getNewLine());
 				buffer.setLength(0);
-				Arrays.fill(insideFunction, 0);
+				bodyIdentifierSuffix = false;
 			}
 			else if (c == '{')
 			{
