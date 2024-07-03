@@ -7,9 +7,9 @@ def test_function(x)
     print(z);
 }
 
-if __name__ == "__main__"
+if(__name__ == "__main__")
 {
-    if len(sys.argv) < 2
+    if(len(sys.argv) < 2)
     {
         print("function_interop.bpp [number]")
         sys.exit(1)
