@@ -78,7 +78,10 @@ public class ReplaceBraces implements TranspileStage
 				insideFunction++;
 			}
 			else //add character to buffer
+			{
 				buffer.append(c);
+				insideFunction = 0;
+			}
 		}
 		
 		//insert any remaining buffer contents
