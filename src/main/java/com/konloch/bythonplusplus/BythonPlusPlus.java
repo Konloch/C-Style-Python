@@ -9,6 +9,7 @@ import com.konloch.disklib.DiskReader;
 import com.konloch.disklib.DiskWriter;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * @author Konloch
@@ -36,6 +37,7 @@ public class BythonPlusPlus
 		
 		BythonPlusPlus bpp = new BythonPlusPlus();
 		bpp.config.load();
+		ArrayList<String> arguments = new ArrayList<>();
 		
 		for(int i = 0; i < args.length; i++)
 		{
@@ -64,6 +66,12 @@ public class BythonPlusPlus
 						break;
 						
 					default:
+						for(int x = i; x < args.length; x++)
+						{
+							arguments.add(args[x]);
+							i++;
+						}
+						
 						if(arg.endsWith(".py")) //run python files (convert to bpp, convert back to python, then run)
 						{
 							//temp compile and run
@@ -73,19 +81,19 @@ public class BythonPlusPlus
 							DiskWriter.write(tempFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
 							
 							//run bpp file
-							if(!bpp.runBPPFile(tempFile))
+							if(!bpp.runBPPFile(tempFile, arguments.toArray(new String[0])))
 								System.out.println("Error: File " + arg + " could not be ran.");
 							
 							tempFile.delete();
 						}
 						else if(arg.endsWith(".by")) //run bython files
 						{
-							if(!bpp.runBPPFile(new File(arg)))
+							if(!bpp.runBPPFile(new File(arg), arguments.toArray(new String[0])))
 								System.out.println("Error: File " + arg + " could not be ran.");
 						}
 						else if(arg.endsWith(".bpp")) //run bython++ files
 						{
-							if(!bpp.runBPPFile(new File(arg)))
+							if(!bpp.runBPPFile(new File(arg), arguments.toArray(new String[0])))
 								System.out.println("Error: File " + arg + " could not be ran.");
 						}
 						break;
@@ -98,7 +106,7 @@ public class BythonPlusPlus
 		}
 	}
 	
-	public boolean runBPPFile(File file) throws Exception
+	public boolean runBPPFile(File file, String[] arguments) throws Exception
 	{
 		if(!file.exists() || !file.isFile())
 			return false;
@@ -110,7 +118,7 @@ public class BythonPlusPlus
 		DiskWriter.write(tempFile, bythonPlusPlusToPython(DiskReader.readString(file)));
 		
 		//run tempFile via python
-		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile);
+		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile, arguments);
 		
 		//output sys out
 		for(String out : wrapper.out)
