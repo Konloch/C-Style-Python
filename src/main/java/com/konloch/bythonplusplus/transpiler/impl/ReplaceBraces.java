@@ -23,6 +23,7 @@ public class ReplaceBraces implements TranspileStage
 		StringBuilder transpiledCode = new StringBuilder();
 		int instructionScope = 0;
 		int newLineSkip = 0;
+		int insideFunction = 0;
 		
 		char[] codeArray = code.toCharArray();
 		for(int i = 0; i < codeArray.length; i++)
@@ -44,9 +45,18 @@ public class ReplaceBraces implements TranspileStage
 					continue;
 				}
 				
+				if(insideFunction == 3)
+				{
+					String temp = buffer.toString().trim();
+					buffer.setLength(0);
+					buffer.append(temp);
+					buffer.append(":");
+				}
+				
 				//EOL insert buffer and reset
 				transpiledCode.append(getTabs(instructionScope)).append(buffer.toString().trim()).append(bpp.config.getNewLine());
 				buffer.setLength(0);
+				insideFunction = 0;
 			}
 			else if (c == '{')
 			{
@@ -59,6 +69,13 @@ public class ReplaceBraces implements TranspileStage
 				//increment tab depth and insert buffer
 				newLineSkip = insertTabDepth(buffer, transpiledCode, instructionScope, newLineSkip);
 				instructionScope--;
+			}
+			else if (c == 'd' && insideFunction == 0
+					|| c == 'e' && insideFunction == 1
+					|| c == 'f' && insideFunction == 2)
+			{
+				buffer.append(c);
+				insideFunction++;
 			}
 			else //add character to buffer
 				buffer.append(c);
