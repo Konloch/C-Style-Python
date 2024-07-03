@@ -21,15 +21,8 @@ public class FunctionInteropTest
 	public void testTestFunction() throws IOException, InterruptedException
 	{
 		BythonPlusPlus bpp = new BythonPlusPlus();
-		
-		//temp compile and run
-		File tempFile = File.createTempFile("bpp-transpile", "py");
-		
-		//read from arg, transpile from python to bpp, write to disk
-		DiskWriter.write(tempFile, bpp.bythonPlusPlusToPython(DiskReader.readString("testcases/general-tests/function_interop.bpp")));
-		
-		//run tempFile via python
-		ProcessWrapper wrapper = bpp.python.runPythonFile(bpp.config.getPython(), tempFile, "27");
+		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/general-tests/function_interop.bpp"),
+				"27");
 		
 		//assert wrapper output length
 		assertEquals(1, wrapper.out.size());

@@ -9,6 +9,7 @@ import com.konloch.disklib.DiskReader;
 import com.konloch.disklib.DiskWriter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -81,19 +82,19 @@ public class BythonPlusPlus
 							DiskWriter.write(tempFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
 							
 							//run bpp file
-							if(!bpp.runBPPFile(tempFile, arguments.toArray(new String[0])))
+							if(!bpp.interpretBPPFile(tempFile, arguments.toArray(new String[0])))
 								System.out.println("Error: File " + arg + " could not be ran.");
 							
 							tempFile.delete();
 						}
 						else if(arg.endsWith(".by")) //run bython files
 						{
-							if(!bpp.runBPPFile(new File(arg), arguments.toArray(new String[0])))
+							if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
 								System.out.println("Error: File " + arg + " could not be ran.");
 						}
 						else if(arg.endsWith(".bpp")) //run bython++ files
 						{
-							if(!bpp.runBPPFile(new File(arg), arguments.toArray(new String[0])))
+							if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
 								System.out.println("Error: File " + arg + " could not be ran.");
 						}
 						break;
@@ -106,19 +107,13 @@ public class BythonPlusPlus
 		}
 	}
 	
-	public boolean runBPPFile(File file, String[] arguments) throws Exception
+	private boolean interpretBPPFile(File file, String[] arguments) throws Exception
 	{
 		if(!file.exists() || !file.isFile())
 			return false;
 		
-		//temp compile and run
-		File tempFile = File.createTempFile("bpp-transpile", "py");
-		
-		//read from arg, transpile from python to bpp, write to disk
-		DiskWriter.write(tempFile, bythonPlusPlusToPython(DiskReader.readString(file)));
-		
-		//run tempFile via python
-		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile, arguments);
+		//process wrapper
+		ProcessWrapper wrapper = runBythonPlusPlusFile(file, arguments);
 		
 		//output sys out
 		for(String out : wrapper.out)
@@ -127,9 +122,6 @@ public class BythonPlusPlus
 		//output sys err
 		for(String err : wrapper.err)
 			System.err.println(err);
-		
-		//delete temp file
-		tempFile.delete();
 		
 		return true;
 	}
@@ -150,5 +142,22 @@ public class BythonPlusPlus
 			buffer = stage.fromBythonPP(this, buffer);
 		
 		return buffer;
+	}
+	
+	public ProcessWrapper runBythonPlusPlusFile(File file, String... arguments) throws IOException, InterruptedException
+	{
+		//temp compile and run
+		File tempFile = File.createTempFile("bpp-transpile", "py");
+		
+		//read from arg, transpile from python to bpp, write to disk
+		DiskWriter.write(tempFile, bythonPlusPlusToPython(DiskReader.readString(file)));
+		
+		//run tempFile via python
+		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile, arguments);
+		
+		//delete temp file
+		tempFile.delete();
+		
+		return wrapper;
 	}
 }
