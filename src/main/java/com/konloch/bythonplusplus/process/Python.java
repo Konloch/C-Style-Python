@@ -1,7 +1,9 @@
 package com.konloch.bythonplusplus.process;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Konloch
@@ -24,8 +26,11 @@ public class Python
 		//wait for the process
 		int exitCode = pythonProcess.waitFor();
 		
-		//TODO read error and out
+		//copy streams to wrapper
+		wrapper.copyFromInputStream(wrapper.out, pythonProcess.getInputStream());
+		wrapper.copyFromInputStream(wrapper.err, pythonProcess.getErrorStream());
 		
+		//return wrapper
 		return wrapper;
 	}
 }

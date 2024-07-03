@@ -112,8 +112,15 @@ public class BythonPlusPlus
 		//run tempFile via python
 		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile);
 		
-		//TODO output err and sys out
+		//output sys out
+		for(String out : wrapper.out)
+			System.out.println(out);
 		
+		//output sys err
+		for(String err : wrapper.err)
+			System.err.println(err);
+		
+		//delete temp file
 		tempFile.delete();
 		
 		return true;
