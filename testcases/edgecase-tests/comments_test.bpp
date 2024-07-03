@@ -1,3 +1,7 @@
+/**
+ * Testing C-Style Multi Line Comments
+ */
+
 if __name__ == "__main__"
 {
     ///test removal of comments while respecting strings

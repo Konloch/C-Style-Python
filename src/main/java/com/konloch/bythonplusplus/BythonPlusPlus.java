@@ -3,7 +3,8 @@ package com.konloch.bythonplusplus;
 import com.konloch.bythonplusplus.process.ProcessWrapper;
 import com.konloch.bythonplusplus.process.Python;
 import com.konloch.bythonplusplus.transpiler.TranspileStage;
-import com.konloch.bythonplusplus.transpiler.impl.RemoveComments;
+import com.konloch.bythonplusplus.transpiler.impl.RemoveMultiLineComments;
+import com.konloch.bythonplusplus.transpiler.impl.RemoveSingleLineComments;
 import com.konloch.bythonplusplus.transpiler.impl.ReplaceBraces;
 import com.konloch.bythonplusplus.transpiler.impl.ReplaceForWhileIfTryCatch;
 import com.konloch.disklib.DiskReader;
@@ -23,7 +24,8 @@ public class BythonPlusPlus
 	public final Python python = new Python();
 	public final TranspileStage[] stages = new TranspileStage[]
 	{
-		new RemoveComments(),
+		new RemoveMultiLineComments(),
+		new RemoveSingleLineComments(),
 		new ReplaceForWhileIfTryCatch(),
 		new ReplaceBraces(),
 	};

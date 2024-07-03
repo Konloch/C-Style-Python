@@ -7,7 +7,7 @@ import com.konloch.bythonplusplus.transpiler.TranspileStage;
  * @author Konloch
  * @since 7/2/2024
  */
-public class RemoveComments implements TranspileStage
+public class RemoveSingleLineComments implements TranspileStage
 {
 	@Override
 	public String fromPython(BythonPlusPlus bpp, String code)
@@ -55,6 +55,10 @@ public class RemoveComments implements TranspileStage
 					buffer.append(newComment);
 					transpiledCode.append(buffer);
 					buffer.setLength(0);
+				}
+				else
+				{
+					//buffer.append(c);
 				}
 			}
 			else if (c == '\n' || c == '\r')
