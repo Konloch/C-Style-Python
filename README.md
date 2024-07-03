@@ -3,7 +3,7 @@ Acts similiar to [Bython](https://github.com/mathialo/bython).
 
 ## Features
 + Transpilers for: `Bython to Python`, `Python to C-Style Python`, `C-Style Python to Python`
-+ CLI & Java API for compiling or running, running requires python (version is up to the user).
++ CLI & Java API for compiling or interpret - interpreting requires python to be installed on the machine (version is up to the user).
 
 ## What Is C-Style Python
 + It's similar to Bython, with the major difference being `If statements`, `for loops` & `while loops` are C/Java like.
@@ -14,11 +14,11 @@ Acts similiar to [Bython](https://github.com/mathialo/bython).
 
 ## How To Use
 + Edit the `config.ini` and provide your python paths for the version you want to use.
-+ Run the class 'CStylePython' with the argument pointing to the script you want to run with the .bpp file extension
++ Run the class 'CStylePython' with the argument pointing to the script you want to run with the .cpy file extension
 
 ## Requirements
 + Java 1.8 or greater
-+ Python (any version) if you want to run the bpp code.
++ Python (any version) if you want to interpret the C-Style Python code.
 
 ## Notes
 + Super experimental, lacks an AST - so it's prone to breaking, feel free to report any edge-cases you find!
