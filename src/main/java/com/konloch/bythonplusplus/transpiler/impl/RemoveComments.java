@@ -12,13 +12,13 @@ public class RemoveComments implements TranspileStage
 	@Override
 	public String fromPython(BythonPlusPlus bpp, String code)
 	{
-		return removeComments(code);
+		return swapComments(code, '#', '/', 1);
 	}
 	
 	@Override
 	public String fromBythonPP(BythonPlusPlus bpp, String code)
 	{
-		return removeComments(code);
+		return swapComments(code, '/', '#', 2);
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class RemoveComments implements TranspileStage
 	 * @param code any code
 	 * @return the formatted string
 	 */
-	public String removeComments(String code)
+	public String swapComments(String code, char baseComment, char newComment, int newBaseCommentCount)
 	{
 		StringBuilder transpiledCode = new StringBuilder();
 		boolean inString = false;
@@ -42,19 +42,18 @@ public class RemoveComments implements TranspileStage
 				buffer.append(c);
 				inString =! inString;
 			}
-			else if (c == '\\' &&inString)
+			else if (c == '\\' && inString)
 			{
 				buffer.append(c);
 				escapeFlag =! escapeFlag;
 			}
-			else if (c == '/' &&!inString)
+			else if (c == baseComment && !inString)
 			{
 				commentSlashCount++;
-				if (commentSlashCount == 2)
+				if (commentSlashCount == newBaseCommentCount)
 				{
-					if(buffer.length() > 0)
-						transpiledCode.append(buffer);
-					
+					buffer.append(newComment);
+					transpiledCode.append(buffer);
 					buffer.setLength(0);
 				}
 			}
@@ -73,7 +72,7 @@ public class RemoveComments implements TranspileStage
 					buffer.setLength(0);
 				}
 			}
-			else if (commentSlashCount == 0)
+			else
 			{
 				if(escapeFlag)
 					escapeFlag = false;
