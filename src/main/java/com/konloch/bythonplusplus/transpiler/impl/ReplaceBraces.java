@@ -81,7 +81,7 @@ public class ReplaceBraces implements TranspileStage
 					continue;
 				}
 				
-				if(bodyIdentifierSuffix && buffer.charAt(buffer.length()-1) != ':') //function body
+				if(bodyIdentifierSuffix && (buffer.length() == 0 || buffer.charAt(buffer.length()-1) != ':')) //function body
 				{
 					String temp = buffer.toString().trim();
 					buffer.setLength(0);
