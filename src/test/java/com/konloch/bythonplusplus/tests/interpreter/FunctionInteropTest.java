@@ -31,8 +31,10 @@ public class FunctionInteropTest
 		//run tempFile via python
 		ProcessWrapper wrapper = bpp.python.runPythonFile(bpp.config.getPython(), tempFile, "27");
 		
+		//assert wrapper output length
 		assertEquals(1, wrapper.out.size());
 		
+		//assert python interpreter results
 		assertEquals("734", wrapper.out.get(0).trim());
 	}
 }
