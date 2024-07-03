@@ -89,8 +89,11 @@ public class ReplaceBraces implements TranspileStage
 					buffer.append(":");
 				}
 				
+				//this is how we loosely support pythonic syntax inside of bython++
+				String bufferTrim = instructionScope > 0 ? buffer.toString().trim() : buffer.toString();
+				
 				//EOL insert buffer and reset
-				transpiledCode.append(getTabs(instructionScope)).append(buffer.toString().trim()).append(bpp.config.getNewLine());
+				transpiledCode.append(getTabs(instructionScope)).append(bufferTrim).append(bpp.config.getNewLine());
 				buffer.setLength(0);
 				bodyIdentifierSuffix = false;
 			}
