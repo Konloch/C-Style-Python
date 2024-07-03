@@ -22,7 +22,7 @@ public class RemoveComments implements TranspileStage
 	}
 	
 	/**
-	 * Removes all comments that start with // it will throw the code away entirely
+	 * Removes all comments that start with /// it will throw the code away entirely
 	 *
 	 * @param code any code
 	 * @return the formatted string
