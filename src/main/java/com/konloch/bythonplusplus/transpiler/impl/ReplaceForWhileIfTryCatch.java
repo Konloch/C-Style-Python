@@ -29,6 +29,7 @@ public class ReplaceForWhileIfTryCatch implements TranspileStage
 		{
 			char c = codeArray[i];
 			
+			//if support
 			if (c == 'i' && i + 1 < max
 					&& codeArray[i + 1] == 'f')
 				bodyFunction = true;
