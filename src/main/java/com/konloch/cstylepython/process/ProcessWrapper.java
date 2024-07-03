@@ -1,4 +1,4 @@
-package com.konloch.bythonplusplus.process;
+package com.konloch.cstylepython.process;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class ProcessWrapper
 {
-	public final String bppCode;
+	public final String cStylePythonCode;
 	public final List<String> out = new ArrayList<>();
 	public final List<String> err = new ArrayList<>();
 	
-	public ProcessWrapper(String bppCode)
+	public ProcessWrapper(String cStylePythonCode)
 	{
-		this.bppCode = bppCode;
+		this.cStylePythonCode = cStylePythonCode;
 	}
 	
 	public void copyFromInputStream(List<String> list, InputStream is)
@@ -49,6 +49,6 @@ public class ProcessWrapper
 	
 	public void printScript()
 	{
-		System.out.println("BPP Transpiled Python Script: " + bppCode);
+		System.out.println("C-Style-Python Transpiled Python Script: " + cStylePythonCode);
 	}
 }

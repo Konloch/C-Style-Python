@@ -1,7 +1,7 @@
-package com.konloch.bythonplusplus.transpiler.impl;
+package com.konloch.cstylepython.transpiler.impl;
 
-import com.konloch.bythonplusplus.BythonPlusPlus;
-import com.konloch.bythonplusplus.transpiler.TranspileStage;
+import com.konloch.cstylepython.CStylePython;
+import com.konloch.cstylepython.transpiler.TranspileStage;
 
 /**
  * @author Konloch
@@ -10,14 +10,14 @@ import com.konloch.bythonplusplus.transpiler.TranspileStage;
 public class RemoveMultiLineComments implements TranspileStage
 {
 	@Override
-	public String fromPython(BythonPlusPlus bpp, String code)
+	public String fromPython(CStylePython cpy, String code)
 	{
 		//TODO
 		return code;
 	}
 	
 	@Override
-	public String fromBythonPP(BythonPlusPlus bpp, String code)
+	public String fromBythonPP(CStylePython cpy, String code)
 	{
 		StringBuilder buffer = new StringBuilder();
 		StringBuilder transpiledCode = new StringBuilder();

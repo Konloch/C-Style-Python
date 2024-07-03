@@ -1,4 +1,4 @@
-package com.konloch.bythonplusplus;
+package com.konloch.cstylepython;
 
 import com.konloch.dynvarmap.DynVarMap;
 import com.konloch.dynvarmap.serializer.DynVarSerializer;
@@ -7,7 +7,7 @@ import com.konloch.dynvarmap.serializer.DynVarSerializer;
  * @author Konloch
  * @since 7/2/2024
  */
-public class BPPConfig
+public class Config
 {
 	private final DynVarMap map = new DynVarMap();
 	private final DynVarSerializer serializer = new DynVarSerializer("config.ini", map);

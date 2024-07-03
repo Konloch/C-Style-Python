@@ -1,6 +1,6 @@
-package com.konloch.bythonplusplus.tools;
+package com.konloch.cstylepython.tools;
 
-import com.konloch.bythonplusplus.BythonPlusPlus;
+import com.konloch.cstylepython.CStylePython;
 import com.konloch.disklib.DiskReader;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class TestBPPTranspiler
 			return;
 		}
 		
-		BythonPlusPlus bpp = new BythonPlusPlus();
+		CStylePython bpp = new CStylePython();
 		File file = new File(args[0]);
 		
 		System.out.println("Compile Example: " + bpp.bythonPlusPlusToPython(DiskReader.readString(file)));

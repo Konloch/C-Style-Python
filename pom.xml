@@ -2,12 +2,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.konloch</groupId>
-    <artifactId>BythonPlusPlus</artifactId>
+    <artifactId>C-Style-Python</artifactId>
     <version>0.0.1</version>
 
-    <name>BythonPlusPlus</name>
-    <description>Bython++ transpiler</description>
-    <url>https://konloch.com/Bython++/</url>
+    <name>C-Style-Python</name>
+    <description>C-Style python transpiler</description>
+    <url>https://konloch.com/C-Style-Python/</url>
     <inceptionYear>2024</inceptionYear>
 
 	<licenses>
@@ -33,9 +33,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/Konloch/Bython++.git</connection>
-        <developerConnection>scm:git:ssh://github.com:Konloch/Bython++.git</developerConnection>
-        <url>http://github.com/Konloch/Bython++/tree/master</url>
+        <connection>scm:git:git://github.com/Konloch/CStylePython.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Konloch/CStylePython.git</developerConnection>
+        <url>http://github.com/Konloch/CStylePython/tree/master</url>
     </scm>
 
     <properties>
@@ -124,7 +124,7 @@
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <manifestEntries>
-	                            <Main-Class>com.konloch.bythonplusplus.BythonPlusPlus</Main-Class>
+	                            <Main-Class>com.konloch.cstylepython.CStylePython</Main-Class>
                                 <Implementation-Version>${project.version}</Implementation-Version>
                                 <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
                                 <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>

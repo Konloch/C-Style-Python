@@ -1,7 +1,7 @@
-package com.konloch.bythonplusplus.tests.edgecases;
+package com.konloch.cstylepython.tests.edgecases;
 
-import com.konloch.bythonplusplus.BythonPlusPlus;
-import com.konloch.bythonplusplus.process.ProcessWrapper;
+import com.konloch.cstylepython.CStylePython;
+import com.konloch.cstylepython.process.ProcessWrapper;
 import org.junit.Test;
 
 import java.io.File;
@@ -18,8 +18,8 @@ public class CommentsTest
 	@Test
 	public void testTestFunction() throws IOException, InterruptedException
 	{
-		BythonPlusPlus bpp = new BythonPlusPlus();
-		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/edgecase-tests/comments_test.bpp"));
+		CStylePython bpp = new CStylePython();
+		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/edgecase-tests/comments_test.cpy"));
 		
 		//assert wrapper output length
 		assertEquals(1, wrapper.out.size());

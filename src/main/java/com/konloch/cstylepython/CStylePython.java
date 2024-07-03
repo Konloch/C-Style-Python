@@ -1,12 +1,12 @@
-package com.konloch.bythonplusplus;
+package com.konloch.cstylepython;
 
-import com.konloch.bythonplusplus.process.ProcessWrapper;
-import com.konloch.bythonplusplus.process.Python;
-import com.konloch.bythonplusplus.transpiler.TranspileStage;
-import com.konloch.bythonplusplus.transpiler.impl.RemoveMultiLineComments;
-import com.konloch.bythonplusplus.transpiler.impl.RemoveSingleLineComments;
-import com.konloch.bythonplusplus.transpiler.impl.ReplaceBraces;
-import com.konloch.bythonplusplus.transpiler.impl.ReplaceForWhileIfTryCatch;
+import com.konloch.cstylepython.process.ProcessWrapper;
+import com.konloch.cstylepython.process.Python;
+import com.konloch.cstylepython.transpiler.TranspileStage;
+import com.konloch.cstylepython.transpiler.impl.RemoveMultiLineComments;
+import com.konloch.cstylepython.transpiler.impl.RemoveSingleLineComments;
+import com.konloch.cstylepython.transpiler.impl.ReplaceBraces;
+import com.konloch.cstylepython.transpiler.impl.ReplaceForWhileIfTryCatch;
 import com.konloch.disklib.DiskReader;
 import com.konloch.disklib.DiskWriter;
 
@@ -18,9 +18,9 @@ import java.util.ArrayList;
  * @author Konloch
  * @since 7/2/2024
  */
-public class BythonPlusPlus
+public class CStylePython
 {
-	public final BPPConfig config = new BPPConfig();
+	public final Config config = new Config();
 	public final Python python = new Python();
 	public final TranspileStage[] stages = new TranspileStage[]
 	{
@@ -40,8 +40,8 @@ public class BythonPlusPlus
 			return;
 		}
 		
-		BythonPlusPlus bpp = new BythonPlusPlus();
-		bpp.config.load();
+		CStylePython cpy = new CStylePython();
+		cpy.config.load();
 		ArrayList<String> arguments = new ArrayList<>();
 		int i = 0;
 		
@@ -51,20 +51,20 @@ public class BythonPlusPlus
 			
 			switch(arg)
 			{
-				case "-c": //compile python into bpp
+				case "-c": //compile python into cpy
 					arg = args[i++];
 					
 					if(arg.toLowerCase().endsWith(".py"))
 					{
 						File inputFile = new File(arg);
-						File outputFile = new File(inputFile.getAbsolutePath().substring(0, inputFile.getAbsolutePath().length() - 2) + "bpp");
+						File outputFile = new File(inputFile.getAbsolutePath().substring(0, inputFile.getAbsolutePath().length() - 2) + "cpy");
 						
-						//read from arg, transpile from python to bpp, write to disk
-						DiskWriter.write(outputFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
+						//read from arg, transpile from python to cpy, write to disk
+						DiskWriter.write(outputFile, cpy.pythonToBythonPlusPlus(DiskReader.readString(arg)));
 					}
 					else
 					{
-						System.out.println("File must end in .py to compile to .bpp");
+						System.out.println("File must end in .py to compile to .cpy");
 						return;
 					}
 					break;
@@ -76,28 +76,28 @@ public class BythonPlusPlus
 						i++;
 					}
 					
-					if(arg.endsWith(".py")) //run python files (convert to bpp, convert back to python, then run)
+					if(arg.endsWith(".py")) //run python files (convert to cpy, convert back to python, then run)
 					{
 						//temp compile and run
-						File tempFile = File.createTempFile("bpp-transpile", "bpp");
+						File tempFile = File.createTempFile("cpy-transpile", "cpy");
 						
-						//read from arg, transpile from python to bpp, write to disk
-						DiskWriter.write(tempFile, bpp.pythonToBythonPlusPlus(DiskReader.readString(arg)));
+						//read from arg, transpile from python to cpy, write to disk
+						DiskWriter.write(tempFile, cpy.pythonToBythonPlusPlus(DiskReader.readString(arg)));
 						
-						//run bpp file
-						if(!bpp.interpretBPPFile(tempFile, arguments.toArray(new String[0])))
+						//run cpy file
+						if(!cpy.interpretCPYFile(tempFile, arguments.toArray(new String[0])))
 							System.out.println("Error: File " + arg + " could not be ran.");
 						
 						tempFile.delete();
 					}
 					else if(arg.endsWith(".by")) //run bython files
 					{
-						if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
+						if(!cpy.interpretCPYFile(new File(arg), arguments.toArray(new String[0])))
 							System.out.println("Error: File " + arg + " could not be ran.");
 					}
-					else if(arg.endsWith(".bpp")) //run bython++ files
+					else if(arg.endsWith(".cpy")) //run cpy files
 					{
-						if(!bpp.interpretBPPFile(new File(arg), arguments.toArray(new String[0])))
+						if(!cpy.interpretCPYFile(new File(arg), arguments.toArray(new String[0])))
 							System.out.println("Error: File " + arg + " could not be ran.");
 					}
 					break;
@@ -109,7 +109,7 @@ public class BythonPlusPlus
 		}
 	}
 	
-	private boolean interpretBPPFile(File file, String[] arguments) throws Exception
+	private boolean interpretCPYFile(File file, String[] arguments) throws Exception
 	{
 		if(!file.exists() || !file.isFile())
 			return false;
@@ -144,15 +144,15 @@ public class BythonPlusPlus
 	public ProcessWrapper runBythonPlusPlusFile(File file, String... arguments) throws IOException, InterruptedException
 	{
 		//temp compile and run
-		File tempFile = File.createTempFile("bpp-transpile", "py");
+		File tempFile = File.createTempFile("cpy-transpile", "py");
 		
-		String bppCode = bythonPlusPlusToPython(DiskReader.readString(file));
+		String cpyCode = bythonPlusPlusToPython(DiskReader.readString(file));
 		
-		//read from arg, transpile from python to bpp, write to disk
-		DiskWriter.write(tempFile, bppCode);
+		//read from arg, transpile from python to cpy, write to disk
+		DiskWriter.write(tempFile, cpyCode);
 		
 		//run tempFile via python
-		ProcessWrapper wrapper = python.runPythonFile(bppCode, config.getPython(), tempFile, arguments);
+		ProcessWrapper wrapper = python.runPythonFile(cpyCode, config.getPython(), tempFile, arguments);
 		
 		//delete temp file
 		tempFile.delete();

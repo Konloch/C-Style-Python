@@ -1,7 +1,7 @@
-package com.konloch.bythonplusplus.transpiler.impl;
+package com.konloch.cstylepython.transpiler.impl;
 
-import com.konloch.bythonplusplus.BythonPlusPlus;
-import com.konloch.bythonplusplus.transpiler.TranspileStage;
+import com.konloch.cstylepython.CStylePython;
+import com.konloch.cstylepython.transpiler.TranspileStage;
 
 /**
  * @author Konloch
@@ -10,14 +10,14 @@ import com.konloch.bythonplusplus.transpiler.TranspileStage;
 public class ReplaceForWhileIfTryCatch implements TranspileStage
 {
 	@Override
-	public String fromPython(BythonPlusPlus bpp, String code)
+	public String fromPython(CStylePython cpy, String code)
 	{
 		//TODO
 		return code;
 	}
 	
 	@Override
-	public String fromBythonPP(BythonPlusPlus bpp, String code)
+	public String fromBythonPP(CStylePython cpy, String code)
 	{
 		StringBuilder buffer = new StringBuilder();
 		boolean bodyFunction = false;
@@ -67,7 +67,7 @@ public class ReplaceForWhileIfTryCatch implements TranspileStage
 						|| c == '\n' && codeArray[i + 1] == '\r')
 					i++;
 				
-				buffer.append(bpp.config.getNewLine());
+				buffer.append(cpy.config.getNewLine());
 				
 				bodyFunction = false;
 				bodyFunction2 = false;

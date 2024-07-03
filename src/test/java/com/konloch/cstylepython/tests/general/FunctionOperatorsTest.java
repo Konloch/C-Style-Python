@@ -1,7 +1,7 @@
-package com.konloch.bythonplusplus.tests.general;
+package com.konloch.cstylepython.tests.general;
 
-import com.konloch.bythonplusplus.BythonPlusPlus;
-import com.konloch.bythonplusplus.process.ProcessWrapper;
+import com.konloch.cstylepython.CStylePython;
+import com.konloch.cstylepython.process.ProcessWrapper;
 import org.junit.Test;
 
 import java.io.File;
@@ -18,8 +18,8 @@ public class FunctionOperatorsTest
 	@Test
 	public void testTestFunction() throws IOException, InterruptedException
 	{
-		BythonPlusPlus bpp = new BythonPlusPlus();
-		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/general-tests/function_operators.bpp"),
+		CStylePython bpp = new CStylePython();
+		ProcessWrapper wrapper = bpp.runBythonPlusPlusFile(new File("testcases/general-tests/function_operators.cpy"),
 				"27");
 		
 		//assert wrapper output length

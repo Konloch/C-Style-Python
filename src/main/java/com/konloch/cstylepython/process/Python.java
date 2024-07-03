@@ -1,4 +1,4 @@
-package com.konloch.bythonplusplus.process;
+package com.konloch.cstylepython.process;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +15,9 @@ public class Python
 	 * @param file any valid python file
 	 * @return the process wrapper which contains the outputs
 	 */
-	public ProcessWrapper runPythonFile(String bppCode, String python, File file, String... arguments) throws IOException, InterruptedException
+	public ProcessWrapper runPythonFile(String cpyCode, String python, File file, String... arguments) throws IOException, InterruptedException
 	{
-		ProcessWrapper wrapper = new ProcessWrapper(bppCode);
+		ProcessWrapper wrapper = new ProcessWrapper(cpyCode);
 		ProcessBuilder builder = new ProcessBuilder(python, file.getAbsolutePath());
 		
 		for(String argument : arguments)

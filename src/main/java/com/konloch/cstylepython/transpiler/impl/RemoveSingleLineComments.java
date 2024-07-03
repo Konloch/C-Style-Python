@@ -1,7 +1,7 @@
-package com.konloch.bythonplusplus.transpiler.impl;
+package com.konloch.cstylepython.transpiler.impl;
 
-import com.konloch.bythonplusplus.BythonPlusPlus;
-import com.konloch.bythonplusplus.transpiler.TranspileStage;
+import com.konloch.cstylepython.CStylePython;
+import com.konloch.cstylepython.transpiler.TranspileStage;
 
 /**
  * @author Konloch
@@ -10,7 +10,7 @@ import com.konloch.bythonplusplus.transpiler.TranspileStage;
 public class RemoveSingleLineComments implements TranspileStage
 {
 	@Override
-	public String fromPython(BythonPlusPlus bpp, String code)
+	public String fromPython(CStylePython cpy, String code)
 	{
 		//TODO
 		return code;
@@ -20,7 +20,7 @@ public class RemoveSingleLineComments implements TranspileStage
 	 * Removes all comments that start with /// it will throw the code away entirely
 	 */
 	@Override
-	public String fromBythonPP(BythonPlusPlus bpp, String code)
+	public String fromBythonPP(CStylePython cpy, String code)
 	{
 		StringBuilder transpiledCode = new StringBuilder();
 		boolean inString = false;
