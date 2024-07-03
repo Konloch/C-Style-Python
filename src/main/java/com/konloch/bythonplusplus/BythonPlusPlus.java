@@ -1,5 +1,7 @@
 package com.konloch.bythonplusplus;
 
+import com.konloch.bythonplusplus.process.ProcessWrapper;
+import com.konloch.bythonplusplus.process.Python;
 import com.konloch.bythonplusplus.transpiler.TranspileStage;
 import com.konloch.bythonplusplus.transpiler.impl.RemoveComments;
 import com.konloch.bythonplusplus.transpiler.impl.ReplaceBraces;
@@ -20,6 +22,7 @@ public class BythonPlusPlus
 		new RemoveComments(),
 		new ReplaceBraces(),
 	};
+	public final Python python = new Python();
 	
 	public static void main(String[] args)
 	{
@@ -32,6 +35,7 @@ public class BythonPlusPlus
 		}
 		
 		BythonPlusPlus bpp = new BythonPlusPlus();
+		bpp.config.load();
 		
 		for(int i = 0; i < args.length; i++)
 		{
@@ -105,7 +109,10 @@ public class BythonPlusPlus
 		//read from arg, transpile from python to bpp, write to disk
 		DiskWriter.write(tempFile, bythonPlusPlusToPython(DiskReader.readString(file)));
 		
-		//TODO run tempFile via python
+		//run tempFile via python
+		ProcessWrapper wrapper = python.runPythonFile(config.getPython(), tempFile);
+		
+		//TODO output err and sys out
 		
 		return true;
 	}
