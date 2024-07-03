@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class BythonPlusPlus
 {
 	public final BPPConfig config = new BPPConfig();
+	public final Python python = new Python();
 	public final TranspileStage[] stages = new TranspileStage[]
 	{
 		new RemoveComments(),
 		new ReplaceBraces(),
 	};
-	public final Python python = new Python();
 	
 	public static void main(String[] args)
 	{
