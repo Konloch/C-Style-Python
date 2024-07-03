@@ -75,8 +75,6 @@ public class RemoveMultiLineComments implements TranspileStage
 			buffer.setLength(0);
 		}
 		
-		System.out.println("OK: " + transpiledCode);
-		
 		return transpiledCode.toString();
 	}
 }
