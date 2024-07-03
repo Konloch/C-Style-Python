@@ -18,7 +18,7 @@ public class RemoveComments implements TranspileStage
 	@Override
 	public String fromBythonPP(BythonPlusPlus bpp, String code)
 	{
-		return swapComments(code, '/', '#', 2);
+		return swapComments(code, '/', '#', 3);
 	}
 	
 	/**

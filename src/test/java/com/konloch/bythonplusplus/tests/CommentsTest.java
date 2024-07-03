@@ -25,6 +25,6 @@ public class CommentsTest
 		assertEquals(1, wrapper.out.size());
 		
 		//assert python interpreter results
-		assertEquals("hello//world\"testing escape//part-2", wrapper.out.get(0).trim());
+		assertEquals("hello///world\"testing escape///part-2", wrapper.out.get(0).trim());
 	}
 }
