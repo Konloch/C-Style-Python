@@ -12,22 +12,15 @@ public class RemoveSingleLineComments implements TranspileStage
 	@Override
 	public String fromPython(BythonPlusPlus bpp, String code)
 	{
-		return swapComments(code, '#', '/', 1);
+		//TODO
+		return code;
 	}
 	
+	/*
+	 * Removes all comments that start with /// it will throw the code away entirely
+	 */
 	@Override
 	public String fromBythonPP(BythonPlusPlus bpp, String code)
-	{
-		return swapComments(code, '/', '#', 3);
-	}
-	
-	/**
-	 * Removes all comments that start with /// it will throw the code away entirely
-	 *
-	 * @param code any code
-	 * @return the formatted string
-	 */
-	public String swapComments(String code, char baseComment, char newComment, int newBaseCommentCount)
 	{
 		StringBuilder transpiledCode = new StringBuilder();
 		boolean inString = false;
@@ -35,8 +28,11 @@ public class RemoveSingleLineComments implements TranspileStage
 		int commentSlashCount = 0;
 		StringBuilder buffer = new StringBuilder();
 		
-		for (char c : code.toCharArray())
+		char[] codeArray = code.toCharArray();
+		int max = codeArray.length;
+		for(int i = 0; i < max; i++)
 		{
+			char c = codeArray[i];
 			if (c == '"' && !escapeFlag)
 			{
 				buffer.append(c);
@@ -47,19 +43,14 @@ public class RemoveSingleLineComments implements TranspileStage
 				buffer.append(c);
 				escapeFlag =! escapeFlag;
 			}
-			else if (c == baseComment && !inString)
+			else if (c == '/' && i + 2 < max && !inString
+					&& codeArray[i + 1] == '/'
+					&& codeArray[i + 2] == '/')
 			{
 				commentSlashCount++;
-				if (commentSlashCount == newBaseCommentCount)
-				{
-					buffer.append(newComment);
-					transpiledCode.append(buffer);
-					buffer.setLength(0);
-				}
-				else
-				{
-					//buffer.append(c);
-				}
+				transpiledCode.append("#").append(buffer);
+				buffer.setLength(0);
+				i += 2;
 			}
 			else if (c == '\n' || c == '\r')
 			{
