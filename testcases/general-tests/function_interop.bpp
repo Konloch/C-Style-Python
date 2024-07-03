@@ -9,11 +9,11 @@ def test_function(x)
 
 if __name__ == "__main__"
 {
-    if len(sys.argv) < 3
+    if len(sys.argv) < 2
     {
         print("function_interop.bpp [number]")
         sys.exit(1)
     }
 
-    test_function(int(sys.argv[2]))
+    test_function(int(sys.argv[1]))
 }

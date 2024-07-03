@@ -17,7 +17,7 @@ public class Python
 	 * @param file any valid python file
 	 * @return the process wrapper which contains the outputs
 	 */
-	public ProcessWrapper runPythonFile(String python, File file, String[] arguments) throws IOException, InterruptedException
+	public ProcessWrapper runPythonFile(String python, File file, String... arguments) throws IOException, InterruptedException
 	{
 		ProcessWrapper wrapper = new ProcessWrapper();
 		ProcessBuilder builder = new ProcessBuilder(python, file.getAbsolutePath());

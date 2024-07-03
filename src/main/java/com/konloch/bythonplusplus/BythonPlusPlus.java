@@ -66,7 +66,7 @@ public class BythonPlusPlus
 						break;
 						
 					default:
-						for(int x = i; x < args.length; x++)
+						for(int x = i + 1; x < args.length; x++)
 						{
 							arguments.add(args[x]);
 							i++;
