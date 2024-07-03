@@ -2,8 +2,6 @@ package com.konloch.bythonplusplus.tests;
 
 import com.konloch.bythonplusplus.BythonPlusPlus;
 import com.konloch.bythonplusplus.process.ProcessWrapper;
-import com.konloch.disklib.DiskReader;
-import com.konloch.disklib.DiskWriter;
 import org.junit.Test;
 
 import java.io.File;
