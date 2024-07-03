@@ -19,7 +19,9 @@ public class BPPConfig
 	
 	public String getNewLine()
 	{
-		return map.getString("newline", "\r\n");
+		return map.getString("newline", "\r\n")
+				.replace("\\n", "\n")
+				.replace("\\r", "\r");
 	}
 	
 	public String getPython()
