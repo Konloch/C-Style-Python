@@ -1,7 +1,7 @@
 //note the incorrect tabbing
-def test_function(int x) {
-        int y = x * x;
-            int z = y + 5;
+def test_function(x) {
+        y = x * x;
+            z = y + 5;
     print(z);
 }
 
