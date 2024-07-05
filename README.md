@@ -53,8 +53,8 @@ demo()
 ```python
 def demo() {
     # Variable assignments
-    x = 10
-    y = 5
+    x = 10;
+    y = 5;
 
     # Conditional statement
     if (x > y) {
